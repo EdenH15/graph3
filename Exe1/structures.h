@@ -32,15 +32,20 @@ namespace graph {
           bool isEmpty() const;
           };
 
+    struct edge {
+        int vertex;
+        int dst;
+    };
+
     class minHeap {
         private:
         static const int MAX_SIZE = 100;
-        int data[MAX_SIZE]{};
+        edge data[MAX_SIZE]{};
         int size;
         public:
         minHeap();
-        void insert(int value);
-        int extractMin();
+        void insert(int vertex,int weight);
+        edge extractMin();
         bool isEmpty() const;
     };
 

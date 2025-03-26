@@ -5,6 +5,7 @@
 #include "Graph.h"
 #include <iostream>
 #include "structures.h"
+#include <climits>
 
 namespace graph {
 
@@ -62,6 +63,41 @@ namespace graph {
       return dfsTree;
       }
   Graph Algorithms::dijkstra(Graph g,int srcVertex) {
+    const int INF = INT_MAX;
+    int numV = g.get_numV();
+    int d[numV];
+    bool processed[numV];
+    for (int i = 0; i < numV; i++) {
+      d[i] = INF;
+      processed[i] = false;
+    }
+    d[srcVertex] = 0;
+    minHeap minHeap;
+    minHeap.insert(srcVertex,0);
+
+    while (!minHeap.isEmpty()) {
+      edge e = minHeap.extractMin();
+      int u = e.vertex;
+      if (processed[u]) {
+        continue;
+      }
+      processed[u] = true;
+      Neighbor* neighbors = g.getNeighbors(u);
+      while (neighbors) {
+          int vertex = neighbors->vertex;
+          int weight = neighbors->weight;
+        if (d[u] + weight < d[vertex]) {
+          d[vertex] = d[u] + weight;
+          minHeap.insert(vertex,weight);
+        }
+          neighbors = neighbors->next;
+        }
+
+      }
+
+
+    }
+
 
 
   }
