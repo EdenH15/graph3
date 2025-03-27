@@ -16,6 +16,22 @@ namespace graph {
             }
         }
 
+        Graph::~Graph() {
+            for (int i = 0; i < numV; i++) {
+                Neighbor* current = adjacencyList[i];
+
+                while (current) {
+                    Neighbor* temp = current;
+                    current = current->next;
+                    delete temp;
+                }
+                adjacencyList[i] = nullptr;
+            }
+            delete[] adjacencyList;
+            adjacencyList = nullptr;
+        }
+
+
         void Graph::addEdge(int src, int dst, int weight) {
             if (src<0 || dst<0 || src>=numV || dst>=numV) {
                 printf("Error the vertex not found\n");
@@ -26,12 +42,12 @@ namespace graph {
             else {
                 addNeighbor(src,dst,weight);
                 addNeighbor(dst,src,weight);
-                printf("The edge added\n");
+                printf("The edge added:\n");
             }
 
         }
-        bool Graph::edgeExists(int src, int dst) {
-            Neighbor* current = adjacencyList[src];
+        bool Graph::edgeExists(const int src, const int dst) const {
+            const Neighbor* current = adjacencyList[src];
             while (current) {
                 if (current->vertex == dst) {
                     return true;
@@ -53,7 +69,6 @@ namespace graph {
                 newNeighbor->next = adjacencyList[src];
                 adjacencyList[src] = newNeighbor;
             }
-
 
         }
         void Graph:: removeEdge(int src,int dst) {
@@ -101,24 +116,24 @@ namespace graph {
             }
 
         }
-        void Graph::releaseMemory() {
-            for (int i = 0; i < numV; i++) {
-                Neighbor* current = adjacencyList[i];
-
-                while (current) {
-                    Neighbor* temp = current;
-                    current = current->next;
-                    delete temp;
-                }
-                adjacencyList[i] = nullptr;
-            }
-            delete[] adjacencyList;
-            adjacencyList = nullptr;
-        }
-        int Graph::get_numV() {
+        // void Graph::releaseMemory() {
+        //     for (int i = 0; i < numV; i++) {
+        //         Neighbor* current = adjacencyList[i];
+        //
+        //         while (current) {
+        //             Neighbor* temp = current;
+        //             current = current->next;
+        //             delete temp;
+        //         }
+        //         adjacencyList[i] = nullptr;
+        //     }
+        //     delete[] adjacencyList;
+        //     adjacencyList = nullptr;
+        // }
+        int Graph::get_numV() const {
           return numV;
         }
-        Neighbor* Graph::getNeighbors(int vertex) {
+        Neighbor* Graph::getNeighbors(const int vertex) const {
           return adjacencyList[vertex];
         }
 

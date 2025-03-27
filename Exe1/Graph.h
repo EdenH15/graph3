@@ -20,15 +20,16 @@ namespace graph {
             Neighbor** adjacencyList;
         public:
             explicit Graph(int vertices);
-            int get_numV();
-            Neighbor* getNeighbors(int vertex);
+            ~Graph();
+            int get_numV() const;
+            Neighbor* getNeighbors(int vertex) const;
             void addNeighbor(int src, int dst,int weight=1);
             void addEdge(int src, int dst, int weight=1);
-            bool edgeExists(int src, int dst);
+            bool edgeExists(int src, int dst) const;
             void removeEdge(int src, int dst);
             void removeEdgeOneWay(int src, int dst);
             void print_graph();
-            void releaseMemory();
+            // void releaseMemory();
     };
 
 }
