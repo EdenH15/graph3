@@ -74,11 +74,11 @@ namespace graph {
     }
     d[srcVertex] = 0;
     minHeap minHeap;
-    minHeap.insert(srcVertex,0);
+    minHeap.insert(srcVertex,srcVertex,0);
 
     while (!minHeap.isEmpty()) {
       edge e = minHeap.extractMin();
-      int u = e.vertex;
+      int u = e.dstV;
       if (processed[u]) {
         continue;
       }
@@ -89,7 +89,7 @@ namespace graph {
         int weight = neighbors->weight;
         if (d[u] + weight < d[vertex]) {
           d[vertex] = d[u] + weight;
-          minHeap.insert(vertex,weight);
+          minHeap.insert(u,vertex,weight);
           parent[vertex] = u;
         }
         neighbors = neighbors->next;
@@ -108,40 +108,42 @@ namespace graph {
   Graph Algorithms::prim(const Graph& g) {
     const int numV = g.get_numV();
     bool* inTree = new bool[numV];
-    int* parent= new int[numV];
+
     for (int i = 0; i < numV; i++) {
       inTree[i] = false;
-      parent[i] = -1;
     }
+
     Graph mst(numV);
     minHeap minHeap;
     int srcV=0;
+
     Neighbor* n = g.getNeighbors(srcV);
     while(n) {
-      minHeap.insert(n->vertex,n->weight);
-      parent[n->vertex] = srcV;
+      minHeap.insert(srcV,n->vertex,n->weight);
       n = n->next;
     }
+
+    inTree[srcV] = true;
     while(!minHeap.isEmpty()) {
       edge e = minHeap.extractMin();
-      int vertex = e.vertex;
-      if (!inTree[e.vertex]) {
-        inTree[e.vertex] = true;
-        mst.addNeighbor(parent[vertex],vertex,e.dst);
-        Neighbor* neighbors = g.getNeighbors(vertex);
+
+      if (!inTree[e.dstV]) {
+        inTree[e.dstV] = true;
+        mst.addNeighbor(e.srcV,e.dstV,e.weight);
+      }
+        Neighbor* neighbors = g.getNeighbors(e.dstV);
         while (neighbors) {
           if (!inTree[neighbors->vertex]) {
-            minHeap.insert(neighbors->vertex,neighbors->weight);
-            parent[neighbors->vertex] = vertex;
+            minHeap.insert(e.dstV,neighbors->vertex,neighbors->weight);
           }
           neighbors = neighbors->next;
         }
       }
-    }
     delete[] inTree;
-    delete[] parent;
     return mst;
-  }
+    }
 
   }
+
+
 

@@ -33,8 +33,9 @@ namespace graph {
           };
 
     struct edge {
-        int vertex;
-        int dst;
+        int srcV;
+        int dstV;
+        int weight;
     };
 
     class minHeap {
@@ -44,7 +45,7 @@ namespace graph {
         int size;
         public:
         minHeap();
-        void insert(int vertex,int weight);
+        void insert(int src,int dst,int weight);
         edge extractMin();
         bool isEmpty() const;
     };

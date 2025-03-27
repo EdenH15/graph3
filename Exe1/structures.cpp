@@ -66,15 +66,16 @@ Queue::Queue() : front(0), rear(0) {}
     size = 0;
   }
 
-void minHeap::insert(int vertex,int weight) {
+void minHeap::insert(int src,int dst,int weight) {
   if (size==MAX_SIZE) {
     cout << "Stack is full!" << endl;
   }
-  data[size].vertex = vertex;
-  data[size].dst=weight;
+  data[size].dstV = dst;
+  data[size].srcV=src;
+  data[size].weight=weight;
   int curSize = size;
   size++;
-  while (curSize>0 && data[curSize].dst>data[curSize-1].dst) {
+  while (curSize>0 && data[curSize].weight>data[curSize-1].weight) {
     edge tmp = data[curSize];
     data[curSize] = data[curSize-1];
     data[curSize-1] = tmp;
