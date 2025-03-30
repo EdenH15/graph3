@@ -40,6 +40,9 @@ int main() {
     printf("after prim:\n");
     Graph prim=Algorithms::prim(g);
     prim.print_graph();
+    printf("after kruskal:\n");
+    Graph kruskalTree=Algorithms::kruskal(g);
+    kruskalTree.print_graph();
     // g.releaseMemory();
     // g2.releaseMemory();
     // bfsTree.releaseMemory();

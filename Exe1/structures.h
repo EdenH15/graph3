@@ -4,13 +4,13 @@
 
 #ifndef QUEUE_H
 #define QUEUE_H
+#define MAX_SIZE 100
 #include <iostream>
 
 namespace graph {
 
     class Queue {
     private:
-        static const int MAX_SIZE = 100;
         int data[MAX_SIZE]{};
         int front, rear;
     public:
@@ -22,15 +22,14 @@ namespace graph {
 
     class Stack{
       private:
-        static const int MAX_SIZE = 100;
         int data[MAX_SIZE]{};
         int top;
-        public:
-          Stack();
-          void push(int value);
-          int pop();
-          bool isEmpty() const;
-          };
+      public:
+        Stack();
+        void push(int value);
+        int pop();
+        bool isEmpty() const;
+    };
 
     struct edge {
         int srcV;
@@ -40,7 +39,6 @@ namespace graph {
 
     class minHeap {
         private:
-        static const int MAX_SIZE = 100;
         edge data[MAX_SIZE]{};
         int size;
         public:
@@ -48,6 +46,14 @@ namespace graph {
         void insert(int src,int dst,int weight);
         edge extractMin();
         bool isEmpty() const;
+    };
+    class unionFind {
+        private:
+        int parent[MAX_SIZE]{};
+        public:
+        unionFind();
+        int find(int v);
+        void unionSet(int u,int v);
     };
 
 }

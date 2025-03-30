@@ -9,7 +9,7 @@ using namespace std;
 
 namespace graph {
 
-Queue::Queue() : front(0), rear(0) {}
+  Queue::Queue() : front(0), rear(0) {}
 
   void Queue::enqueue(int value) {
     if ((rear + 1) % MAX_SIZE == front) {
@@ -66,23 +66,23 @@ Queue::Queue() : front(0), rear(0) {}
     size = 0;
   }
 
-void minHeap::insert(int src,int dst,int weight) {
-  if (size==MAX_SIZE) {
-    cout << "Stack is full!" << endl;
-  }
-  data[size].dstV = dst;
-  data[size].srcV=src;
-  data[size].weight=weight;
-  int curSize = size;
-  size++;
-  while (curSize>0 && data[curSize].weight>data[curSize-1].weight) {
-    edge tmp = data[curSize];
-    data[curSize] = data[curSize-1];
-    data[curSize-1] = tmp;
-    curSize--;
+  void minHeap::insert(int src,int dst,int weight) {
+    if (size==MAX_SIZE) {
+      cout << "Stack is full!" << endl;
+    }
+    data[size].dstV = dst;
+    data[size].srcV=src;
+    data[size].weight=weight;
+    int curSize = size;
+    size++;
+    while (curSize>0 && data[curSize].weight>data[curSize-1].weight) {
+      edge tmp = data[curSize];
+      data[curSize] = data[curSize-1];
+      data[curSize-1] = tmp;
+      curSize--;
+    }
   }
 
-}
   edge minHeap::extractMin() {
     if (size == 0) {
       cout << "Stack is empty!" << endl;
@@ -91,13 +91,34 @@ void minHeap::insert(int src,int dst,int weight) {
     edge minVal = data[size-1];
     size--;
     return minVal;
-
-}
-  bool minHeap::isEmpty() const {
-  if (size == 0) {
-    return true;
   }
-  return false;
-}
+
+  bool minHeap::isEmpty() const {
+    if (size == 0) {
+      return true;
+    }
+    return false;
+  }
+
+  unionFind::unionFind() {
+    for (int i = 0; i < MAX_SIZE; i++) {
+      parent[i] = i;
+    }
+  }
+
+  int unionFind::find(int v) {
+    while (parent[v] != v) {
+      v=parent[v];
+    }
+      return v;
+  }
+
+  void unionFind::unionSet(int u,int v) {
+    int root1 = find(u);
+    int root2 = find(v);
+    if (root1 != root2) {
+      parent[root1] = root2;
+    }
+  }
 
 }

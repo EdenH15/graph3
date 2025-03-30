@@ -6,12 +6,18 @@
 #include <iostream>
 #include "structures.h"
 #include <climits>
+using namespace std;
 
 namespace graph {
+
   Graph Algorithms::bfs(const Graph& g, int srcVertex) {
     const int numVertices = g.get_numV();
     Graph bfsTree(numVertices);
     bool* visited = new bool[numVertices]();
+    for (int i=0; i<numVertices; i++) {
+      visited[i] = false;
+    }
+
     Queue q;
     q.enqueue(srcVertex);
     visited[srcVertex] = true;
@@ -50,8 +56,9 @@ namespace graph {
 
   Graph Algorithms::dfs(Graph& g,int srcVertex){
     const int numVertices = g.get_numV();
-    Graph dfsTree(numVertices);
     bool* visited = new bool[numVertices]();
+    Graph dfsTree(numVertices);
+
     recDfs(g,srcVertex,dfsTree,visited);
     for(int i=0;i<numVertices;i++){
       if(!visited[i]){
@@ -61,6 +68,7 @@ namespace graph {
     delete[] visited;
     return dfsTree;
   }
+
   Graph Algorithms::dijkstra(const Graph& g,int srcVertex) {
     const int INF = INT_MAX;
     const int numV = g.get_numV();
@@ -87,15 +95,20 @@ namespace graph {
       while (neighbors) {
         int vertex = neighbors->vertex;
         int weight = neighbors->weight;
-        if (d[u] + weight < d[vertex]) {
-          d[vertex] = d[u] + weight;
-          minHeap.insert(u,vertex,weight);
-          parent[vertex] = u;
+        if (weight < 0) {
+          cout << "Error: Graph contains negative edge weights. Dijkstra cannot be applied." << endl;
+          exit(1); // או throw std::runtime_error("Negative weights detected.");
         }
+        relax(u,vertex,weight,d,minHeap,parent);
+        // if (d[u] + weight < d[vertex]) {
+        //   d[vertex] = d[u] + weight;
+        //   minHeap.insert(u,vertex,weight);
+        //   parent[vertex] = u;
+        // }
         neighbors = neighbors->next;
       }
-
     }
+
     Graph dijkstraTree(numV);
     for(int i=0;i<numV;i++) {
       if (parent[i] != -1) {
@@ -103,8 +116,17 @@ namespace graph {
       }
     }
     return dijkstraTree;
-
   }
+
+  void Algorithms::relax(int u, int vertex, int weight, int* d, minHeap& pq, int* parent) {
+    if (d[u] + weight < d[vertex]) {
+      d[vertex] = d[u] + weight;
+      pq.insert(u, vertex, weight);
+      parent[vertex] = u;
+    }
+  }
+
+
   Graph Algorithms::prim(const Graph& g) {
     const int numV = g.get_numV();
     bool* inTree = new bool[numV];
@@ -129,7 +151,7 @@ namespace graph {
 
       if (!inTree[e.dstV]) {
         inTree[e.dstV] = true;
-        mst.addNeighbor(e.srcV,e.dstV,e.weight);
+        mst.addEdge(e.srcV,e.dstV,e.weight);
       }
         Neighbor* neighbors = g.getNeighbors(e.dstV);
         while (neighbors) {
@@ -142,6 +164,35 @@ namespace graph {
     delete[] inTree;
     return mst;
     }
+
+  Graph Algorithms::kruskal(Graph& g) {
+    int numVertices = g.get_numV();
+    minHeap h;
+    unionFind uf;
+    Graph kruskalTree(numVertices);
+
+    for (int u = 0; u < numVertices; u++) {
+      Neighbor* neighbors = g.getNeighbors(u);
+      while (neighbors) {
+        int v = neighbors->vertex;
+        int weight = neighbors->weight;
+
+        if (u < v) {
+          h.insert(u, v, weight);
+        }
+        neighbors = neighbors->next;
+      }
+    }
+
+    while (!h.isEmpty()) {
+      edge e = h.extractMin();
+      if (uf.find(e.srcV) != uf.find(e.dstV)) {
+        kruskalTree.addEdge(e.srcV,e.dstV,e.weight);
+        uf.unionSet(e.srcV,e.dstV);
+      }
+    }
+    return kruskalTree;
+  }
 
   }
 
