@@ -8,117 +8,119 @@
 using namespace std;
 
 namespace graph {
-
-  Queue::Queue() : front(0), rear(0) {}
-
-  void Queue::enqueue(int value) {
-    if ((rear + 1) % MAX_SIZE == front) {
-      cout << "Queue is full!" << endl;
-    } else {
-      data[rear] = value;
-      rear = (rear + 1) % MAX_SIZE;
+    Queue::Queue() : front(0), rear(0) {
     }
-  }
 
-  int Queue::dequeue() {
-    if (front == rear) {
-      cout << "Queue is empty!" << endl;
-      return -1;
+    void Queue::enqueue(int value) {
+        if ((rear + 1) % MAX_SIZE == front) {
+            cout << "Queue is full!" << endl;
+        } else {
+            data[rear] = value;
+            rear = (rear + 1) % MAX_SIZE;
+        }
     }
-      int val = data[front];
-      front = (front + 1) % MAX_SIZE;
-      return val;
-  }
 
-  bool Queue::isEmpty() const {
-    if (front == rear) {
-      return true;
+    int Queue::dequeue() {
+        if (front == rear) {
+            cout << "Queue is empty!" << endl;
+            return -1;
+        }
+        int val = data[front];
+        front = (front + 1) % MAX_SIZE;
+        return val;
     }
-    return false;
-  }
 
-  Stack::Stack() : top(0) {}
+    bool Queue::isEmpty() const {
+        if (front == rear) {
+            return true;
+        }
+        return false;
+    }
 
-  void Stack::push(int value) {
-    if (top == MAX_SIZE) {
-      cout << "Stack is full!" << endl;
-      return;
+    Stack::Stack() : top(0) {
     }
-    data[top] = value;
-    top = top + 1;
-  }
-  int Stack::pop() {
-    if (top == 0) {
-      cout << "Stack is empty!" << endl;
-      return -1;
-    }
-    top = top-1;
-    return data[top];
-  }
-  bool Stack::isEmpty() const {
-    if (top == 0) {
-      return true;
-    }
-    return false;
-  }
 
-  minHeap::minHeap() {
-    size = 0;
-  }
-
-  void minHeap::insert(int src,int dst,int weight) {
-    if (size==MAX_SIZE) {
-      cout << "Stack is full!" << endl;
+    void Stack::push(int value) {
+        if (top == MAX_SIZE) {
+            cout << "Stack is full!" << endl;
+            return;
+        }
+        data[top] = value;
+        top = top + 1;
     }
-    data[size].dstV = dst;
-    data[size].srcV=src;
-    data[size].weight=weight;
-    int curSize = size;
-    size++;
-    while (curSize>0 && data[curSize].weight>data[curSize-1].weight) {
-      edge tmp = data[curSize];
-      data[curSize] = data[curSize-1];
-      data[curSize-1] = tmp;
-      curSize--;
-    }
-  }
 
-  edge minHeap::extractMin() {
-    if (size == 0) {
-      cout << "Stack is empty!" << endl;
-      return {-1,-1};
+    int Stack::pop() {
+        if (top == 0) {
+            cout << "Stack is empty!" << endl;
+            return -1;
+        }
+        top = top - 1;
+        return data[top];
     }
-    edge minVal = data[size-1];
-    size--;
-    return minVal;
-  }
 
-  bool minHeap::isEmpty() const {
-    if (size == 0) {
-      return true;
+    bool Stack::isEmpty() const {
+        if (top == 0) {
+            return true;
+        }
+        return false;
     }
-    return false;
-  }
 
-  unionFind::unionFind() {
-    for (int i = 0; i < MAX_SIZE; i++) {
-      parent[i] = i;
+    minHeap::minHeap() {
+        size = 0;
     }
-  }
 
-  int unionFind::find(int v) {
-    while (parent[v] != v) {
-      v=parent[v];
+    void minHeap::insert(int src, int dst, int weight) {
+        if (size == MAX_SIZE) {
+            cout << "Stack is full!" << endl;
+        }
+        data[size].dstV = dst;
+        data[size].srcV = src;
+        data[size].weight = weight;
+        int curSize = size;
+        size++;
+        while (curSize > 0 && data[curSize].weight > data[curSize - 1].weight) {
+            edge tmp = data[curSize];
+            data[curSize] = data[curSize - 1];
+            data[curSize - 1] = tmp;
+            curSize--;
+        }
     }
-      return v;
-  }
 
-  void unionFind::unionSet(int u,int v) {
-    int root1 = find(u);
-    int root2 = find(v);
-    if (root1 != root2) {
-      parent[root1] = root2;
+    edge minHeap::extractMin() {
+        if (size == 0) {
+            cout << "Stack is empty!" << endl;
+            return {-1, -1,-1};
+        }
+        edge minVal = data[size - 1];
+        size--;
+        return minVal;
     }
-  }
 
+    bool minHeap::isEmpty() const {
+        if (size == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    unionFind::unionFind() {
+        for (int i = 0; i < MAX_SIZE; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int unionFind::find(int v) {
+        while (parent[v] != v) {
+            v = parent[v];
+        }
+        return v;
+    }
+
+    void unionFind::unionSet(int u, int v) {
+        int root1 = find(u);
+        int root2 = find(v);
+        if (root1 != root2) {
+            parent[root1] = root2;
+        }
+    }
 }

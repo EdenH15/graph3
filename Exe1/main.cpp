@@ -17,16 +17,6 @@ int main() {
     g.addEdge(3,5,5);
     g.addEdge(4,5,2);
     printf("original graph:\n");
-    // g.addEdge(0, 1, 5);
-    // g.addEdge(1, 2, 20);
-    // g.addEdge(2, 0, 1);
-    // Graph g2(5);
-    // g2.addEdge(0, 3, 2);
-    // g2.addEdge(1, 4, 1);
-    // g2.addEdge(4, 2, 3);
-    // g2.addEdge(3, 2, 4);
-    // g2.addEdge(0, 1, 5);
-    // g2.addEdge(4, 3, 1);
     g.print_graph();
     printf("after bfs\n");
     Graph bfsTree= Algorithms::bfs(g,0);
@@ -43,10 +33,6 @@ int main() {
     printf("after kruskal:\n");
     Graph kruskalTree=Algorithms::kruskal(g);
     kruskalTree.print_graph();
-    // g.releaseMemory();
-    // g2.releaseMemory();
-    // bfsTree.releaseMemory();
-    // dfsTree.releaseMemory();
     return 0;
 }
 

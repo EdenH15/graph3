@@ -8,26 +8,33 @@
 #include <iostream>
 
 namespace graph {
-
     class Queue {
     private:
         int data[MAX_SIZE]{};
         int front, rear;
+
     public:
         Queue();
+
         void enqueue(int value);
+
         int dequeue();
+
         bool isEmpty() const;
     };
 
-    class Stack{
-      private:
+    class Stack {
+    private:
         int data[MAX_SIZE]{};
         int top;
-      public:
+
+    public:
         Stack();
+
         void push(int value);
+
         int pop();
+
         bool isEmpty() const;
     };
 
@@ -38,24 +45,31 @@ namespace graph {
     };
 
     class minHeap {
-        private:
+    private:
         edge data[MAX_SIZE]{};
         int size;
-        public:
+
+    public:
         minHeap();
-        void insert(int src,int dst,int weight);
+
+        void insert(int src, int dst, int weight);
+
         edge extractMin();
+
         bool isEmpty() const;
     };
-    class unionFind {
-        private:
-        int parent[MAX_SIZE]{};
-        public:
-        unionFind();
-        int find(int v);
-        void unionSet(int u,int v);
-    };
 
+    class unionFind {
+    private:
+        int parent[MAX_SIZE]{};
+
+    public:
+        unionFind();
+
+        int find(int v);
+
+        void unionSet(int u, int v);
+    };
 }
 
 #endif // QUEUE_H

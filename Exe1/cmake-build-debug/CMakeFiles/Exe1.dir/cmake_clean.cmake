@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Exe1.dir/AlgoTest.cpp.o"
+  "CMakeFiles/Exe1.dir/AlgoTest.cpp.o.d"
   "CMakeFiles/Exe1.dir/Algorithms.cpp.o"
   "CMakeFiles/Exe1.dir/Algorithms.cpp.o.d"
   "CMakeFiles/Exe1.dir/Graph.cpp.o"

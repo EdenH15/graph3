@@ -129,6 +129,30 @@ Exe1/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Exe1.dir/build.make CMakeFiles/Exe1.dir/build
 .PHONY : Exe1/fast
 
+AlgoTest.o: AlgoTest.cpp.o
+.PHONY : AlgoTest.o
+
+# target to build an object file
+AlgoTest.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Exe1.dir/build.make CMakeFiles/Exe1.dir/AlgoTest.cpp.o
+.PHONY : AlgoTest.cpp.o
+
+AlgoTest.i: AlgoTest.cpp.i
+.PHONY : AlgoTest.i
+
+# target to preprocess a source file
+AlgoTest.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Exe1.dir/build.make CMakeFiles/Exe1.dir/AlgoTest.cpp.i
+.PHONY : AlgoTest.cpp.i
+
+AlgoTest.s: AlgoTest.cpp.s
+.PHONY : AlgoTest.s
+
+# target to generate assembly for a file
+AlgoTest.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Exe1.dir/build.make CMakeFiles/Exe1.dir/AlgoTest.cpp.s
+.PHONY : AlgoTest.cpp.s
+
 Algorithms.o: Algorithms.cpp.o
 .PHONY : Algorithms.o
 
@@ -234,6 +258,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Exe1"
+	@echo "... AlgoTest.o"
+	@echo "... AlgoTest.i"
+	@echo "... AlgoTest.s"
 	@echo "... Algorithms.o"
 	@echo "... Algorithms.i"
 	@echo "... Algorithms.s"

@@ -12,5 +12,6 @@ add_executable(Exe1
     structures.h
     Algorithms.cpp
     Algorithms.h
+        AlgoTest.cpp
 )
 
